@@ -1,0 +1,10 @@
+<nav th:fragment="navbarFragment">
+    <div>
+        <a href="/">게시판</a>
+        <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+        <a th:href="@{/user/signup}">회원가입</a>
+        <div sec:authorize="isAnonymous()">로그인 필요</div>
+        <div sec:authorize="isAuthenticated()">로그인 됨</div>
+    </div>
+</nav>
