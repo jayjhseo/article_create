@@ -1,9 +1,16 @@
 package com.test01.sbbtest_01.article;
 
 import com.test01.sbbtest_01.user.SiteUser;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +38,13 @@ public class ArticleService {
     public List<Article> getList() {
         return this.articleRepository.findAll();
     }
+    public Page<Article> getList(int page, String kw) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
+        Specification<Article> spec = search(kw);
+        return this.articleRepository.findAll(spec, pageable);
+    }
 
     public void modify(Article article, String title, String content) {
         article.setTitle(title);
@@ -40,5 +54,19 @@ public class ArticleService {
 
     public void delete(Article article) {
         this.articleRepository.delete(article);
+    }
+
+    private Specification<Article> search(String kw) {
+        return new Specification<>() {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public Predicate toPredicate(Root<Article> a, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                query.distinct(true);
+                Join<Article, SiteUser> u1 = a.join("author", JoinType.LEFT);
+                return cb.or(cb.like(a.get("title"), "%" + kw + "%"),
+                        cb.like(a.get("content"), "%" + kw + "%"),
+                        cb.like(u1.get("username"), "%" + kw + "%"));
+            }
+        };
     }
 }

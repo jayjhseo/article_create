@@ -4,19 +4,16 @@ import com.test01.sbbtest_01.user.SiteUser;
 import com.test01.sbbtest_01.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,9 +22,10 @@ public class ArticleController {
     private final ArticleService articleService;
     private final UserService userService;
     @GetMapping("/list")
-    public String articleList(Model model) {
-        List<Article> articleList = this.articleService.getList();
-        model.addAttribute("articleList", articleList);
+    public String articleList(Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw) {
+        Page<Article> articleList = this.articleService.getList(page, kw);
+        Page<Article> paging = this.articleService.getList(page, kw);
+        model.addAttribute("paging", paging);
         return "article_list";
     }
     @GetMapping("/create")
