@@ -38,12 +38,9 @@ public class ArticleService {
     public List<Article> getList() {
         return this.articleRepository.findAll();
     }
-    public Page<Article> getList(int page, String kw) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
+    public List<Article> getList(String kw) {
         Specification<Article> spec = search(kw);
-        return this.articleRepository.findAll(spec, pageable);
+        return this.articleRepository.findAll(spec);
     }
 
     public void modify(Article article, String title, String content) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,10 +23,9 @@ public class ArticleController {
     private final ArticleService articleService;
     private final UserService userService;
     @GetMapping("/list")
-    public String articleList(Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw) {
-        Page<Article> articleList = this.articleService.getList(page, kw);
-        Page<Article> paging = this.articleService.getList(page, kw);
-        model.addAttribute("paging", paging);
+    public String articleList(Model model, @RequestParam(value = "kw", defaultValue = "") String kw) {
+        List<Article> articleList = this.articleService.getList(kw);
+        model.addAttribute("articleList", articleList);
         return "article_list";
     }
     @GetMapping("/create")
