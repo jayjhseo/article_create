@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,4 +27,6 @@ public class Article {
     private LocalDate modifyDate;
     @ManyToOne
     private SiteUser author;
+    @ManyToMany
+    Set<SiteUser> voter;
 }
