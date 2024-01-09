@@ -1,10 +1,9 @@
-package com.test01.sbbtest_01.article;
+package com.test01.domain.article;
 
-import com.test01.sbbtest_01.user.SiteUser;
-import com.test01.sbbtest_01.user.UserService;
+import com.test01.domain.user.SiteUser;
+import com.test01.domain.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.test01.sbbtest_01.article;
+package com.test01.domain.article;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

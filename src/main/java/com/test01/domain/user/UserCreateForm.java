@@ -1,4 +1,4 @@
-package com.test01.sbbtest_01.user;
+package com.test01.domain.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

@@ -1,5 +1,8 @@
-package com.test01.sbbtest_01.user;
+package com.test01.global.security;
 
+import com.test01.domain.user.SiteUser;
+import com.test01.domain.user.UserRepository;
+import com.test01.domain.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,16 +1,11 @@
-package com.test01.sbbtest_01.article;
+package com.test01.domain.article;
 
-import com.test01.sbbtest_01.user.SiteUser;
+import com.test01.domain.user.SiteUser;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,11 +15,13 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     public void create(String title, String content, SiteUser user) {
-        Article a = new Article();
-        a.setTitle(title);
-        a.setContent(content);
-        a.setAuthor(user);
-        this.articleRepository.save(a);
+        Article article = Article
+                .builder()
+                .title(title)
+                .content(content)
+                .author(user)
+                .build();
+        this.articleRepository.save(article);
     }
 
     public Article getArticle(Integer id) {

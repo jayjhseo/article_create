@@ -1,20 +1,87 @@
 <html layout:decorate="~{layout}">
-    <div layout:fragment="content">
-        <form th:action="@{/user/login}" method="post">
-            <div th:if="${param.error}">
-                <div class="alert alert-danger">
-                    사용자ID 또는 비밀번호를 확인해 주세요.
-                </div>
+<div layout:fragment="content">
+    <form th:object="${logInIDForm}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <div>
+            <label for="username">사용자ID</label>
+            <input type="text" name="username" id="username" th:field="*{username}">
+            <div id="errorMessage" style="color:red; display:none;" class="alert alert-danger">
+                사용자ID가 일치하지 않습니다.
             </div>
-            <div>
-                <label for="username">사용자ID</label>
-                <input type="text" name="username" id="username">
+            <div id="successMessage" style="color:green; display:none;" class="alert alert-danger">
+                사용자ID가 존재합니다.
             </div>
-            <div>
-                <label for="password">비밀번호</label>
-                <input type="password" name="password" id="password">
+        </div>
+        <div>
+            <label for="password">비밀번호</label>
+            <input type="password" name="password" id="password" th:field="*{password}">
+            <div id="pwErrorMsg" style="color:red; display:none;" class="alert alert-danger">
+                사용자ID가 일치하지 않습니다.
             </div>
-            <button type="submit">로그인</button>
-        </form>
+            <div id="pwSuccessMsg" style="color:green; display:none;" class="alert alert-danger">
+                사용자ID가 존재합니다.
+            </div>
+        </div>
+        <button type="submit">로그인</button>
+    </form>
+    <div>
+        <a href="/oauth2/authorization/kakao">카카오 로그인</a>
     </div>
+</div>
 </html>
+
+
+<script>
+    $('#username').on('input', function() {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    var username = $("#username").val();
+
+    $.ajax({
+        url: '/user/checkId',
+        type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        data: { username: username },
+        success: function(response) {
+            if (response === 'ID is valid') {
+                $('#successMessage').show();
+                $('#errorMessage').hide();
+            } else {
+                $('#errorMessage').show();
+                $('#successMessage').hide();
+            }
+        },
+        error: function() {
+            console.error('오류가 발생하였습니다.');
+        }
+    });
+});
+<!--        $('#password').on('input', function() {-->
+<!--    var token = $("meta[name='_csrf']").attr("content");-->
+<!--    var header = $("meta[name='_csrf_header']").attr("content");-->
+<!--    var password = $("#password").val();-->
+
+<!--    $.ajax({-->
+<!--        url: '/user/checkPw',-->
+<!--        type: 'POST',-->
+<!--        headers: {-->
+<!--            'X-CSRF-TOKEN': token-->
+<!--        },-->
+<!--        data: { password: password },-->
+<!--        success: function(response) {-->
+<!--            if (response === 'PW is valid') {-->
+<!--                $('#pwSuccessMsg').show();-->
+<!--                $('#pwErrorMsg').hide();-->
+<!--            } else {-->
+<!--                $('#pwErrorMsg').show();-->
+<!--                $('#pwSuccessMsg').hide();-->
+<!--            }-->
+<!--        },-->
+<!--        error: function() {-->
+<!--            console.error('오류가 발생하였습니다.');-->
+<!--        }-->
+<!--    });-->
+<!--});-->
+</script>

@@ -1,7 +1,5 @@
-package com.test01.sbbtest_01.article;
+package com.test01.domain.article;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 

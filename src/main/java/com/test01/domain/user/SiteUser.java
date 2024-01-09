@@ -1,12 +1,15 @@
-package com.test01.sbbtest_01.user;
+package com.test01.domain.user;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
-@Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class SiteUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

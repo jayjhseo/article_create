@@ -1,4 +1,4 @@
-package com.test01.sbbtest_01.user;
+package com.test01.domain.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

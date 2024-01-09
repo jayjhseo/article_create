@@ -1,4 +1,4 @@
-package com.test01.sbbtest_01;
+package com.test01.domain.home.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

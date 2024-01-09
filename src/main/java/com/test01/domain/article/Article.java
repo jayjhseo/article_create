@@ -1,13 +1,19 @@
-package com.test01.sbbtest_01.article;
+package com.test01.domain.article;
 
-import com.test01.sbbtest_01.user.SiteUser;
+import com.test01.domain.user.SiteUser;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +22,8 @@ public class Article {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
+    private LocalDate createDate;
+    private LocalDate modifyDate;
     @ManyToOne
     private SiteUser author;
 }
